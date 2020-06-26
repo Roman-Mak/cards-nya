@@ -1,12 +1,12 @@
 .button {
     background-color: #4a76a8;
     color: #ffffff;
-    border: none;
     min-width: 80px;
     min-height: 35px;
-    border-radius: 3px;
+    border-radius: 5px;
     font-size: 14px;
     outline: none;
+    border: none;
 }
 
 .button:hover {

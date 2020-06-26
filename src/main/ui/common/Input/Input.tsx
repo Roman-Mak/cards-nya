@@ -1,11 +1,12 @@
 import React from "react";
 import Button from "../Button/Button";
+import styles from "./Input.module.css"
 
 const Input = (props: any) => {
 
     return (
-        <div>
-            <input type={"text"} placeholder={"Test"}/>
+        <div className={styles.inputContainer}>
+            <input type={props.type} placeholder={props.placeholder}/>
             <Button name={"Test"} onClickFunc={() => {}}/>
         </div>
     )

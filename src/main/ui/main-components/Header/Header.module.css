@@ -1,0 +1,19 @@
+.header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 70px;
+    background-color: #4a76a8;
+}
+
+.header a {
+    padding: 10px;
+    text-decoration: none;
+    color: #ffffff;
+    font-size: 16px;
+}
+
+.header a:hover {
+    text-decoration: #ffffff underline;
+}

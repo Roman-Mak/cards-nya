@@ -4,7 +4,7 @@ import styles from "./Button.module.css"
 type PropsType = {
     name: string;
     onClickFunc: () => void;
-}
+};
 
 const Button = (props: PropsType) => {
     return (

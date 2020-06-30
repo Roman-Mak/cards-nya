@@ -1,0 +1,18 @@
+.login {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.login div {
+    padding: 3px;
+}
+
+.rememberMe {
+    display: flex;
+}
+
+.rememberMe span {
+    margin-top: 7px;
+}

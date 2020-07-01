@@ -8,7 +8,7 @@ export type UserLoginType = {
     email: string;
     password: string;
     rememberMe: boolean;
-}
+};
 
 type UserDataResponse = {
     email: string;
@@ -20,7 +20,8 @@ type UserDataResponse = {
     __v: number;
     _id: string;
     success: boolean;
-}
+    error: string;
+};
 
 export const loginApi = {
     userLogin(userData: UserLoginType) {

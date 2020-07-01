@@ -2,29 +2,42 @@ import {loginApi, UserLoginType} from "../dal/api-login";
 import {Dispatch} from "redux";
 
 const USER_LOGIN = "USER-LOGIN";
+const SET_ERROR = "SET-ERROR";
 
 const initialState = {
     email: "",
     name: "",
-    token: ""
+    token: "",
+    error: ""
 };
 
 type initialStateType = typeof initialState;
 
-const loginReducer = (state: initialStateType = initialState, action: userLoginSuccessType): initialStateType => {
+const loginReducer = (state: initialStateType = initialState, action: LoginActionType): initialStateType => {
     switch (action.type) {
-        case USER_LOGIN: {
-            return {...state, ...action.userData}
-        }
+        case USER_LOGIN:
+            return {...state, ...action.userData};
+        case SET_ERROR:
+            return {...state, error: action.error};
         default:
             return state;
     }
 };
 
-type userLoginSuccessType = { type: string; userData: initialStateType };
-const userLoginSuccess = (userData: initialStateType): userLoginSuccessType => ({type: USER_LOGIN, userData});
+type LoginActionType = UserLoginSuccessType | SetErrorType;
 
-export const userLogin = (userLoginData: UserLoginType) => (dispatch: Dispatch<userLoginSuccessType>) => {
+type UserDataType = {
+    email: string;
+    name: string;
+    token: string;
+}
+type UserLoginSuccessType = { type: typeof USER_LOGIN; userData: UserDataType };
+const userLoginSuccess = (userData: UserDataType): UserLoginSuccessType => ({type: USER_LOGIN, userData});
+
+type SetErrorType = { type: typeof SET_ERROR; error: string};
+const setError = (error: string): SetErrorType => ({type: SET_ERROR, error});
+
+export const userLogin = (userLoginData: UserLoginType) => (dispatch: Dispatch<LoginActionType>) => {
     loginApi.userLogin(userLoginData)
         .then(res => {
             if (res.success) {
@@ -32,7 +45,9 @@ export const userLogin = (userLoginData: UserLoginType) => (dispatch: Dispatch<u
                     email: res.email,
                     name: res.name,
                     token: res.token
-                }))
+                }));
+            } else {
+                dispatch(setError(res.error));
             }
         })
 };

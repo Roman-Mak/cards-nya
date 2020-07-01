@@ -1,34 +1,29 @@
-import React, {useState, ChangeEvent} from "react";
+import React, {useState} from "react";
 import styles from "./Register.module.css"
 import Input from "../../common/Input/Input";
 import Button from "../../common/Button/Button";
+import {NewUser} from "../../../bll/register-reducer";
 
 const Register = () => {
 
+    const [newEmail, setNewEmail] = useState<string>("");
 
-    const [name, setName] = useState("");
-    const changeName=(e: ChangeEvent<HTMLInputElement>)=>{
-        setName(e.currentTarget.value)
+    const [password, setPassword] = useState<string>("");
+
+    const [repeatPassword, onChangeFunc] = useState<string>("");
+
+     const setNewUserData=():void=>{
+         if (password === repeatPassword) {
+             NewUser({newEmail,repeatPassword})
+         } else { alert("Пароли не совпадают")}
     };
-
-    const [password, setPassword] = useState("");
-    const newPassword=(e: ChangeEvent<HTMLInputElement>):void=>{
-        setPassword(e.currentTarget.value)
-    };
-
-    const [repeatPassword, setRepeatPassword] = useState("");
-    const repeatMewPassword=(e: ChangeEvent<HTMLInputElement>):void=>{
-        setRepeatPassword(e.currentTarget.value)
-    };
-
 
     return (
         <div className={styles.register}>
-            <Input type={"text"} placeholder={"Name"} value={name} changeData={changeName}/>
-            <Input type={"password"} placeholder={"Password"} value={password} changeData={newPassword}/>
-            <Input type={"password"} placeholder={"Repeat password"} value={repeatPassword} changeData={repeatMewPassword}/>
-            <Button name={"Registration"} onClickFunc={() => {
-            }}/>
+            <Input type={"text"} placeholder={"e-mail"} value={newEmail} onChangeFunc={setNewEmail}/>
+            <Input type={"password"} placeholder={"Password"} value={password} onChangeFunc={setPassword}/>
+            <Input type={"password"} placeholder={"Repeat password"} value={repeatPassword} onChangeFunc={onChangeFunc}/>
+            <Button name={"Register"} onClickFunc={setNewUserData}/>
         </div>
     );
 };

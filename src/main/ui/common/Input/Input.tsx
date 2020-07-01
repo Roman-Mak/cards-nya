@@ -15,5 +15,4 @@ const Input = (props: InputPropsType) => {
         </div>
     );
 };
-
 export default Input;

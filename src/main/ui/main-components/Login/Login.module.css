@@ -11,8 +11,10 @@
 
 .rememberMe {
     display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-.rememberMe span {
-    margin-top: 7px;
+.error {
+    color: red;
 }

@@ -3,11 +3,13 @@ import thunkMiddleware from "redux-thunk";
 import profileReducer from "./profile-reducer";
 import loginReducer from "./login-reducer";
 import registerReducer from "./register-reducer";
+import forgotPasswordReducer from "./forgot-password-reducer";
 
 const rootReducer = combineReducers({
     profile: profileReducer,
     login: loginReducer,
-    register: registerReducer
+    register: registerReducer,
+    forgotPassword: forgotPasswordReducer
 });
 
 type RootReducerType = typeof rootReducer;

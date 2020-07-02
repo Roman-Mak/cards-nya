@@ -5,6 +5,7 @@ import Button from "../../common/Button/Button";
 import {userLogin} from "../../../bll/login-reducer";
 import {useDispatch, useSelector} from "react-redux";
 import {AppStateType} from "../../../bll/store";
+import { Redirect } from "react-router-dom";
 
 const Login = () => {
     const [email, setLogin] = useState<string>("");
@@ -13,6 +14,7 @@ const Login = () => {
 
     const dispatch = useDispatch();
     const error = useSelector((store: AppStateType) => store.login.error);
+    const isAuth = useSelector((store: AppStateType) => store.login.isAuth);
 
     const onRememberMeChange = useCallback(
         (e: ChangeEvent<HTMLInputElement>) => {
@@ -28,6 +30,8 @@ const Login = () => {
         },
         [email, password, rememberMe, dispatch]
     );
+
+    if (isAuth) return <Redirect to={"/profile"}/>;
 
     return (
         <div className={styles.login}>

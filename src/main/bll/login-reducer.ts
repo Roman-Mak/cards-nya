@@ -3,12 +3,14 @@ import {Dispatch} from "redux";
 
 const USER_LOGIN = "USER-LOGIN";
 const SET_ERROR = "SET-ERROR";
+const SET_IS_AUTH = "SET-IS-AUTH";
 
 const initialState = {
     email: "",
     name: "",
     token: "",
-    error: ""
+    error: "",
+    isAuth: false
 };
 
 type initialStateType = typeof initialState;
@@ -19,12 +21,14 @@ const loginReducer = (state: initialStateType = initialState, action: LoginActio
             return {...state, ...action.userData};
         case SET_ERROR:
             return {...state, error: action.error};
+        case SET_IS_AUTH:
+            return {...state, isAuth: action.isAuth};
         default:
             return state;
     }
 };
 
-type LoginActionType = UserLoginSuccessType | SetErrorType;
+type LoginActionType = UserLoginSuccessType | SetErrorType | SetIsAuthType;
 
 type UserDataType = {
     email: string;
@@ -37,6 +41,9 @@ const userLoginSuccess = (userData: UserDataType): UserLoginSuccessType => ({typ
 type SetErrorType = { type: typeof SET_ERROR; error: string };
 const setError = (error: string): SetErrorType => ({type: SET_ERROR, error});
 
+type SetIsAuthType = {type: typeof SET_IS_AUTH; isAuth: boolean};
+const setIsAuth = (isAuth: boolean): SetIsAuthType => ({type: SET_IS_AUTH, isAuth});
+
 export const userLogin = (userLoginData: UserLoginType) => (dispatch: Dispatch<LoginActionType>) => {
     loginApi.userLogin(userLoginData)
         .then(res => {
@@ -46,10 +53,12 @@ export const userLogin = (userLoginData: UserLoginType) => (dispatch: Dispatch<L
                     name: res.name,
                     token: res.token
                 }));
+                dispatch(setIsAuth(true));
             }
         })
         .catch(res => {
             dispatch(setError(res.response.data.error));
+            dispatch(setIsAuth(false));
         })
 };
 

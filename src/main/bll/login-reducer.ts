@@ -34,7 +34,7 @@ type UserDataType = {
 type UserLoginSuccessType = { type: typeof USER_LOGIN; userData: UserDataType };
 const userLoginSuccess = (userData: UserDataType): UserLoginSuccessType => ({type: USER_LOGIN, userData});
 
-type SetErrorType = { type: typeof SET_ERROR; error: string};
+type SetErrorType = { type: typeof SET_ERROR; error: string };
 const setError = (error: string): SetErrorType => ({type: SET_ERROR, error});
 
 export const userLogin = (userLoginData: UserLoginType) => (dispatch: Dispatch<LoginActionType>) => {
@@ -46,9 +46,10 @@ export const userLogin = (userLoginData: UserLoginType) => (dispatch: Dispatch<L
                     name: res.name,
                     token: res.token
                 }));
-            } else {
-                dispatch(setError(res.error));
             }
+        })
+        .catch(res => {
+            dispatch(setError(res.response.data.error));
         })
 };
 

@@ -3,26 +3,36 @@ import styles from "./Register.module.css"
 import Input from "../../common/Input/Input";
 import Button from "../../common/Button/Button";
 import {NewUser} from "../../../bll/register-reducer";
+import {useDispatch} from "react-redux";
+
 
 const Register = () => {
 
-    const [newEmail, setNewEmail] = useState<string>("");
+    const [email, setNewEmail] = useState<string>("");
 
     const [password, setPassword] = useState<string>("");
 
-    const [repeatPassword, onChangeFunc] = useState<string>("");
+    const [repeatPassword, setRepeatPassword] = useState<string>("");
 
-     const setNewUserData=():void=>{
-         if (password === repeatPassword) {
-             NewUser({newEmail,repeatPassword})
-         } else { alert("Пароли не совпадают")}
+    const dispatch = useDispatch();
+
+    const setNewUserData = (): void => {
+        if (password === repeatPassword) {
+            dispatch(NewUser({email, password}));
+            setNewEmail("");
+            setPassword("");
+            setRepeatPassword("")
+        } else {
+            alert("Пароли не совпадают")
+        }
     };
 
     return (
         <div className={styles.register}>
-            <Input type={"text"} placeholder={"e-mail"} value={newEmail} onChangeFunc={setNewEmail}/>
+            <Input type={"text"} placeholder={"e-mail"} value={email} onChangeFunc={setNewEmail}/>
             <Input type={"password"} placeholder={"Password"} value={password} onChangeFunc={setPassword}/>
-            <Input type={"password"} placeholder={"Repeat password"} value={repeatPassword} onChangeFunc={onChangeFunc}/>
+            <Input type={"password"} placeholder={"Repeat password"} value={repeatPassword}
+                   onChangeFunc={setRepeatPassword}/>
             <Button name={"Register"} onClickFunc={setNewUserData}/>
         </div>
     );

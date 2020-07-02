@@ -2,12 +2,12 @@ import axios from "axios";
 
 const baseURL = `https://cards-nya-back.herokuapp.com/1.0/`;
 const instance = axios.create({
-    baseURL: baseURL,
+    baseURL: baseURL
 });
 
 export type NewUserType = {
-    newEmail: string;
-    repeatPassword: string;
+    email: string;
+    password: string;
 }
 
 type NewUserResponse = {
@@ -22,6 +22,6 @@ type NewUserResponse = {
 
 export const apiRegister = {
     addNewUser(NewUser: NewUserType) {
-        return instance.post<NewUserResponse>(`auth/register`, {NewUser})
+        return instance.post<NewUserResponse>(`auth/register`, NewUser)
     }
 };

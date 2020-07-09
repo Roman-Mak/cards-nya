@@ -60,6 +60,7 @@ export const userLogin = (userLoginData: UserLoginType) => (dispatch: Dispatch<L
                     token: res.token
                 }));
                 dispatch(setIsAuth(true));
+                document.cookie=`token=${res.token}`;
             }
         })
         .catch(res => {

@@ -15,6 +15,7 @@ const initialState = {
 
 type initialStateType = typeof initialState;
 
+
 const loginReducer = (state: initialStateType = initialState, action: LoginActionType): initialStateType => {
     switch (action.type) {
         case USER_LOGIN:
@@ -27,6 +28,7 @@ const loginReducer = (state: initialStateType = initialState, action: LoginActio
             return state;
     }
 };
+
 
 type LoginActionType = UserLoginSuccessType | SetErrorType | SetIsAuthType;
 

@@ -1,13 +1,12 @@
 import {Dispatch} from "redux";
 import {apiRegister, NewUserType} from "../dal/api-register";
-import {useDispatch} from "react-redux";
 
 const REGISTER = "cards-nya/auth/REGISTER";
 
 const initialState = {
     email: "",
     isAdmin: false,
-    __v: 1,
+    // __v: 1,
     _id: ""
 };
 
@@ -24,10 +23,11 @@ const registerReducer = (state: initialStateType = initialState, action: addNewU
     }
 };
 
+
 const addNewUser = (addedUser: initialStateType): addNewUserType => ({type: REGISTER, addedUser});
 
 export const NewUser = (newUserData: NewUserType) => (dispatch: Dispatch<addNewUserType>) => {
-    apiRegister.addNewUser(newUserData)
+     apiRegister.addNewUser(newUserData)
         .then(res => {
             if (res.data.success === true) {
                 dispatch(addNewUser(res.data.addedUser))

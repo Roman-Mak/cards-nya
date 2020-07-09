@@ -4,6 +4,7 @@ import {Dispatch} from "redux";
 const USER_LOGIN = "USER-LOGIN";
 const SET_ERROR = "SET-ERROR";
 const SET_IS_AUTH = "SET-IS-AUTH";
+const SET_TOKEN = "SET-TOKEN";
 
 const initialState = {
     email: "",
@@ -23,12 +24,17 @@ const loginReducer = (state: initialStateType = initialState, action: LoginActio
             return {...state, error: action.error};
         case SET_IS_AUTH:
             return {...state, isAuth: action.isAuth};
+        case SET_TOKEN:
+            return {...state, token: action.token};
         default:
             return state;
     }
 };
 
-type LoginActionType = UserLoginSuccessType | SetErrorType | SetIsAuthType;
+type LoginActionType = UserLoginSuccessType | SetErrorType | SetIsAuthType | SetTokenType;
+
+type SetTokenType = {type: typeof SET_TOKEN; token: string}
+export const setToken = (token: string) => ({type: SET_TOKEN, token});
 
 type UserDataType = {
     email: string;

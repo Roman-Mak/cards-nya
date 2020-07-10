@@ -5,6 +5,8 @@ import {useDispatch, useSelector} from "react-redux";
 import {LoadingPacksCards} from "../../../bll/packs-reducer";
 import { Pack } from '../../../dal/api-table-cards';
 import {AppStateType} from "../../../bll/store";
+import { NavLink } from 'react-router-dom';
+import {PACKS_TABLE} from "../Routes/Routes";
 
 
 const MainTable = () => {
@@ -42,7 +44,7 @@ const MainTable = () => {
     const dataOfPacks = Packs.map((c:Pack) => {
         return {
             key: c._id,
-            name: <a>{c.name}</a>,
+            name: <NavLink to={`${PACKS_TABLE}/cards/${c._id}`}>{c.name}</NavLink>,
             created: c.created,
             update: c.updated,
             buttons: <div>

@@ -6,13 +6,14 @@ import Login from "../Login/Login";
 import Register from "../Register/Register";
 import ForgotPassword from "../ForgotPassword/ForgotPassword";
 import MainTable from "../Table/TablePacks";
-
+import Cards from "../Cards/Cards";
 
 export const PROFILE_PATH = "/profile";
 export const LOGIN_PATH = "/login";
 export const REGISTER_PATH = "/register";
 export const FORGOT_PASSWORD_PATH = "/forgot-password";
-export const CARDS_TABLE = "/cards-table";
+export const PACKS_TABLE = "/packs-table";
+export const CARDS_TABLE = `${PACKS_TABLE}/cards/:packId?`;
 
 const Routes = () => {
 
@@ -22,7 +23,8 @@ const Routes = () => {
             <Route path={LOGIN_PATH} render={() => <Login/>}/>
             <Route path={REGISTER_PATH} render={() => <Register/>}/>
             <Route path={FORGOT_PASSWORD_PATH} render={() => <ForgotPassword/>}/>
-            <Route path={CARDS_TABLE} render={() => <MainTable/>}/>
+            <Route exact path={PACKS_TABLE} render={() => <MainTable/>}/>
+            <Route path={CARDS_TABLE} render={() => <Cards/>}/>
         </div>
     );
 };

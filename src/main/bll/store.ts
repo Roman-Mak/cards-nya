@@ -4,14 +4,15 @@ import profileReducer from "./profile-reducer";
 import loginReducer from "./login-reducer";
 import registerReducer from "./register-reducer";
 import forgotPasswordReducer from "./forgot-password-reducer";
-import loadingDeckOfCardsReducer from "./table-cards-reducer";
+import packsOfCardsReducer from "./packs-reducer";
+
 
 const rootReducer = combineReducers({
     profile: profileReducer,
     login: loginReducer,
     register: registerReducer,
     forgotPassword: forgotPasswordReducer,
-    loadingDeckOfCards:loadingDeckOfCardsReducer
+    packsOfCards:packsOfCardsReducer
 });
 
 type RootReducerType = typeof rootReducer;

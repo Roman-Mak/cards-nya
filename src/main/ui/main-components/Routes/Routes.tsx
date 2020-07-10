@@ -5,7 +5,7 @@ import Profile from "../Profile/Profile";
 import Login from "../Login/Login";
 import Register from "../Register/Register";
 import ForgotPassword from "../ForgotPassword/ForgotPassword";
-import ConnectedUsersTable from "../Table/Table";
+import MainTable from "../Table/TablePaks";
 
 
 export const PROFILE_PATH = "/profile";
@@ -22,7 +22,7 @@ const Routes = () => {
             <Route path={LOGIN_PATH} render={() => <Login/>}/>
             <Route path={REGISTER_PATH} render={() => <Register/>}/>
             <Route path={FORGOT_PASSWORD_PATH} render={() => <ForgotPassword/>}/>
-            <Route path={CARDS_TABLE} render={() => <ConnectedUsersTable/>}/>
+            <Route path={CARDS_TABLE} render={() => <MainTable/>}/>
         </div>
     );
 };

@@ -4,11 +4,12 @@ import {Table} from 'antd';
 import {useDispatch, useSelector} from "react-redux";
 import {LoadingPacksCards} from "../../../bll/packs-reducer";
 import { Pack } from '../../../dal/api-table-cards';
+import {AppStateType} from "../../../bll/store";
 
 
 const MainTable = () => {
 
-    const Packs =  useSelector((store)=> store.packsOfCards.cardPacks);
+    const Packs =  useSelector((store:AppStateType)=> store.packsOfCards.cardPacks);
 
     const dispatch = useDispatch();
 
@@ -38,7 +39,7 @@ const MainTable = () => {
         },
     ];
 
-    const dataOfPacks = Packs.map((c) => {
+    const dataOfPacks = Packs.map((c:Pack) => {
         return {
             key: c._id,
             name: <a>{c.name}</a>,
@@ -57,7 +58,6 @@ const MainTable = () => {
         </>
     )
 };
-
 
 export default MainTable;
 

@@ -1,5 +1,5 @@
 import React, {useEffect} from "react";
-import MyTable, {TableModelType} from "../../common/Table/MyTable";
+import Table, {TableModelType} from "../../common/Table/Table";
 import {useDispatch, useSelector} from "react-redux";
 import {AppStateType} from "../../../bll/store";
 import {CardType} from "../../../dal/api-get-cards";
@@ -39,13 +39,13 @@ let columns: Array<TableModelType> = [
     }
 ];
 
-const Cards = () => {
+const Cards = (props: CardsPropsType) => {
     const cards = useSelector((state: AppStateType) => state.cards.cards);
     const dispatch = useDispatch();
 
-    // useEffect(() => {
-    //     dispatch(getCards(props.id));
-    // }, [props.id, dispatch]);
+    useEffect(() => {
+        dispatch(getCards(props.id));
+    }, [props.id, dispatch]);
 
     return (
         <div className={styles.container}>
@@ -53,7 +53,7 @@ const Cards = () => {
                 <Button name={"Add Card"} onClickFunc={() => {
                 }}/>
             </div>
-            <MyTable columns={columns} items={cards}/>
+            <Table columns={columns} items={cards}/>
         </div>
     )
 };

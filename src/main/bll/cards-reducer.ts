@@ -4,11 +4,7 @@ import {CardType, getCardsApi} from "../dal/api-get-cards";
 const GET_CARDS = "GET-CARDS";
 
 const initialState = {
-    cards: [
-        {answer: "yes", question: "yes?", grade: 1, _id: "6"},
-        {answer: "yes", question: "yes?", grade: 1, _id: "7"},
-        {answer: "yes", question: "yes?", grade: 1, _id: "8"}
-    ]
+    cards: []
 };
 
 type initialStateType = {

@@ -1,5 +1,5 @@
 import React, {ReactNode} from "react";
-import styles from "./MyTable.module.css"
+import styles from "./Table.module.css"
 import {CardType} from "../../../dal/api-get-cards";
 
 export type TableModelType = {
@@ -12,7 +12,7 @@ type TablePropsType = {
     items: Array<CardType>;
 };
 
-const MyTable = (props: TablePropsType) => {
+const Table = (props: TablePropsType) => {
     return (
         <div className={styles.container}>
             <div className={styles.header}>
@@ -35,4 +35,4 @@ const MyTable = (props: TablePropsType) => {
     )
 };
 
-export default MyTable;
+export default Table;

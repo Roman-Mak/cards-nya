@@ -8,10 +8,8 @@ type EditMenuPropsType = {
 export const EditMenu = (props: EditMenuPropsType) => {
     return (
         <div style={{display: "flex", justifyContent: "space-around", width: "100%"}}>
-            <Button name={"update"} onClickFunc={() => {
-            }}/>
-            <Button name={"delete"} onClickFunc={() => {
-            }}/>
+            <Button name={"update"} onClickFunc={() => {}}/>
+            <Button name={"delete"} onClickFunc={() => {}}/>
         </div>
     )
 };

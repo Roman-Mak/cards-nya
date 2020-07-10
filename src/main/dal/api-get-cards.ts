@@ -7,14 +7,14 @@ const instance = axios.create({
 export type CardType = {
     answer: string;
     question: string;
-    // cardsPack_id: string;
+    cardsPack_id: string;
     grade: number;
-    // rating: number;
-    // shots: number;
-    // type: string;
-    // created: string;
-    // updated: string;
-    // __v: number;
+    rating: number;
+    shots: number;
+    type: string;
+    created: string;
+    updated: string;
+    __v: number;
     _id: string;
 }
 

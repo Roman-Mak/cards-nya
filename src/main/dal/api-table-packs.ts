@@ -30,8 +30,22 @@ export  type ResponsePacks = {
     tokenDeathTime: number
 }
 
-export const apiTableCards = {
+export type ResponseAddPacks ={
+    newCardsPack: Pack
+    success: boolean
+    token: string
+    tokenDeathTime: number
+}
+
+export const apiTablePacks = {
     loadingCardsPack() {
-        return instance.get<ResponsePacks>(`cards/pack?${document.cookie}&pageCount=30`)
+        return instance.get<ResponsePacks>(`cards/pack?${document.cookie}&pageCount=40`)
+    },
+    addCardsPack(newPackName:string) {
+        return instance.post<ResponseAddPacks>(`cards/pack`,{cardsPack:{
+                name: newPackName
+            },token:document.cookie.split("=")[1]
+        })
     }
+
 };

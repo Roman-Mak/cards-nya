@@ -34,6 +34,7 @@ const Login = () => {
     if (isAuth) return <Redirect to={"/profile"}/>;
 
     return (
+
         <div className={styles.login}>
             <div>Sign In</div>
             <Input type={"email"} placeholder={"Login"} onChangeFunc={setLogin} value={email}/>

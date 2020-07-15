@@ -6,6 +6,7 @@ import {NewUser} from "../../../bll/register-reducer";
 import {useDispatch} from "react-redux";
 
 
+
 const Register = () => {
 
     const [email, setNewEmail] = useState<string>("");

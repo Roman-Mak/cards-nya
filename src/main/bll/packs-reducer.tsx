@@ -1,8 +1,8 @@
-import {apiTableCards, Pack} from "../dal/api-table-cards";
+import {apiTablePacks, Pack} from "../dal/api-table-packs";
 import {Dispatch} from "redux";
 
-const LOADING_PACKS_OF_CARDS = "cards-nya/auth/LOADING_PACKS_OF_CARDS";
-
+const LOADING_PACKS_OF_CARDS = "cards-nya/packs/LOADING_PACKS_OF_CARDS";
+const ADD_NEW_PACK = "cards-nya/packs/ADD_NEW_PACK";
 
 
 const initialState = {
@@ -44,7 +44,12 @@ const initialState = {
 };
 type initialStateType = typeof initialState;
 
-const packsOfCardsReducer = (state: initialStateType = initialState, action:loadingTableCards) => {
+type CommonPacksType =
+    LoadingTableCardsType
+    | AddNewPackType
+
+
+const packsOfCardsReducer = (state: initialStateType = initialState, action: any):initialStateType => { //////исправить action!!!!
     switch (action.type) {
         case LOADING_PACKS_OF_CARDS: {
             return {
@@ -52,22 +57,50 @@ const packsOfCardsReducer = (state: initialStateType = initialState, action:load
                 cardPacks: action.allPacksCards
             }
         }
+        case ADD_NEW_PACK: {
+            debugger
+            return {
+                ...state,
+                cardPacks: [action.NewPack, ...state.cardPacks]
+            }
+        }
+
         default:
             return state;
     }
 };
 
-type loadingTableCards ={
-   type:string
+type LoadingTableCardsType = {
+    type: string
     allPacksCards: Array<Pack>
 }
+type AddNewPackType = {
+    type: string
+    NewPack: Pack
+}
 
-const loadingTableCardsAC = (allPacksCards:Array<Pack>): loadingTableCards => ({type: LOADING_PACKS_OF_CARDS, allPacksCards});
 
-export const LoadingPacksCards = () => (dispatch:Dispatch) => {
-    return apiTableCards.loadingCardsPack()
+const loadingTableCardsAC = (allPacksCards: Array<Pack>): LoadingTableCardsType => ({
+    type: LOADING_PACKS_OF_CARDS,
+    allPacksCards
+});
+const addNewPackAC = (NewPack: Pack): AddNewPackType => ({
+    type: ADD_NEW_PACK,
+    NewPack});
+
+
+export const LoadingPacksCards = () => (dispatch: Dispatch) => {
+    return apiTablePacks.loadingCardsPack()
         .then(res => {
             dispatch(loadingTableCardsAC(res.data.cardPacks));
+            document.cookie = `token=${res.data.token}`;
+        })
+};
+export const AddPacksCards = (newPack: string) => (dispatch: Dispatch) => {
+    return apiTablePacks.addCardsPack(newPack)
+        .then(res => {
+            debugger
+            dispatch(addNewPackAC(res.data.newCardsPack));
             document.cookie = `token=${res.data.token}`;
         })
 };

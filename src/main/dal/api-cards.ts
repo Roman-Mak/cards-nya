@@ -29,7 +29,7 @@ type CardsResponseType = {
     tokenDeathTime: number;
 };
 
-type PostCardType = {
+type PostCardResponseType = {
     newCard: CardType;
     success: boolean;
     token: string;
@@ -40,10 +40,15 @@ export const cardsApi = {
         return instance.get<CardsResponseType>(`/cards/card?cardsPack_id=${id}&${document.cookie}`)
             .then(res => res.data);
     },
-    addCard(packId: string) {
-        return instance.post<PostCardType>(`/cards/card`, {
-            card: {cardsPack_id: packId
-            }, token: document.cookie.split("=")[1]
+    addCard(packId: string, question: string, answer: string) {
+        return instance.post<PostCardResponseType>(`/cards/card`, {
+            card:
+                {
+                    cardsPack_id: packId,
+                    question,
+                    answer
+                },
+            token: document.cookie.split("=")[1]
         }).then(res => res.data);
     }
 };

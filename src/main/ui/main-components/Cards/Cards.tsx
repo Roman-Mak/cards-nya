@@ -52,8 +52,8 @@ const Cards = () => {
         dispatch(getCards(packId));
     }, [packId, dispatch]);
 
-    const onAddCardClick = useCallback(() => {
-        dispatch(addCard(packId));
+    const onAddCardClick = useCallback((question) => {
+        dispatch(addCard(packId, question, "blabla"));
         setIsAddModalHidden(true);
     }, [dispatch, packId]);
 

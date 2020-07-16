@@ -40,8 +40,9 @@ export const getCards = (id: string) => (dispatch: Dispatch<GetCardsSuccessType>
         })
 };
 
-export const addCard = (packId: string) => (dispatch: Dispatch<AddCardSuccessType>) => {
-    cardsApi.addCard(packId)
+export const addCard = (packId: string, question: string, answer: string) =>
+    (dispatch: Dispatch<AddCardSuccessType>) => {
+    cardsApi.addCard(packId, question, answer)
         .then(res => {
             dispatch(addCardsSuccess(res.newCard));
             document.cookie = `token=${res.token}`;

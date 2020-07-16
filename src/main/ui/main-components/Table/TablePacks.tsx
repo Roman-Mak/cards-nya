@@ -70,6 +70,7 @@ const MainTable: React.FC = () => {
 
     const dataOfPacks = Packs.map((c:Pack) => {
         return {
+            id: c._id,
             key: c._id,
             name: <a>{c.name}</a>,
             created: c.created,

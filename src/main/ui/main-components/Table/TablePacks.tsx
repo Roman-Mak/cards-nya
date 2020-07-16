@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import 'antd/dist/antd.css';
 import {Table} from 'antd';
 import {useDispatch, useSelector} from "react-redux";
-import {AddPacksCards, LoadingPacksCards} from "../../../bll/packs-reducer";
+import {AddPackCard, DeletePackCard, LoadingPacksCards} from "../../../bll/packs-reducer";
 import {Pack} from '../../../dal/api-table-packs';
 import {AppStateType} from "../../../bll/store";
 import ModalWindowWithTwoInputs from "../../common/Modal/ModalWindowWith2Input";
@@ -59,12 +59,14 @@ const MainTable: React.FC = () => {
         }, []
     );
 
-    const deleteFunction = () => {
-        alert('yoyo')
+    const deleteFunction = (idPack:string):void => {
+        dispatch (DeletePackCard(idPack));
+        changeForDeletePacksStatusTrue()
     };
 
     const addNewPack =(firstValue:string):void=>{
-        dispatch (AddPacksCards(firstValue))
+        dispatch (AddPackCard(firstValue));
+        changeForAddPacksStatusTrue()
     };
 
 
@@ -76,10 +78,20 @@ const MainTable: React.FC = () => {
             update: c.updated,
             buttons: <div>
                 <button>update</button>
-                <button onClick={changeForDeletePacksStatusFalse}>delete</button>
-            </div>
+                <button onClick={changeForDeletePacksStatusFalse} >delete</button>
+            </div>,
+            // modalWindow:
+            // <div>     {!isHiddenForDeletePacks
+            //     ? <ModalWindowWithTwoButton nameItem={'pack'}
+            //                                 idItem={c._id}
+            //                                 cancelFunction={changeForDeletePacksStatusTrue}
+            //                                 confirmFunction={deleteFunction}/>
+            //     : null
+            // }</div>
+
         }
     });
+
 
     return (
         <div>
@@ -87,15 +99,10 @@ const MainTable: React.FC = () => {
                 ? <ModalWindowWithTwoInputs name={'ADD'} placeholder={'namePack'}
                                             cancelFunction={changeForAddPacksStatusTrue}
                                             addItemFunction={addNewPack}
-
                 />
                 : null
             }
-            {!isHiddenForDeletePacks
-                ? <ModalWindowWithTwoButton cancelFunction={changeForDeletePacksStatusTrue}
-                                            confirmFunction={deleteFunction}/>
-                : null
-            }
+
             <Table columns={columns} dataSource={dataOfPacks}/>
         </div>
     )

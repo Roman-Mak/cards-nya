@@ -3,6 +3,7 @@ import {Dispatch} from "redux";
 
 const LOADING_PACKS_OF_CARDS = "cards-nya/packs/LOADING_PACKS_OF_CARDS";
 const ADD_NEW_PACK = "cards-nya/packs/ADD_NEW_PACK";
+const DELETE_PACK = "cards-nya/packs/DELETE_PACK";
 
 
 const initialState = {
@@ -58,10 +59,15 @@ const packsOfCardsReducer = (state: initialStateType = initialState, action: any
             }
         }
         case ADD_NEW_PACK: {
-            debugger
             return {
                 ...state,
                 cardPacks: [action.NewPack, ...state.cardPacks]
+            }
+        }
+        case DELETE_PACK: {
+            return {
+                ...state,
+                cardPacks: state.cardPacks.filter(p =>p._id !== action.DeletedPack._id)
             }
         }
 
@@ -78,6 +84,10 @@ type AddNewPackType = {
     type: string
     NewPack: Pack
 }
+type DeletedPackType = {
+    type: string
+    DeletedPack: Pack
+}
 
 
 const loadingTableCardsAC = (allPacksCards: Array<Pack>): LoadingTableCardsType => ({
@@ -87,6 +97,9 @@ const loadingTableCardsAC = (allPacksCards: Array<Pack>): LoadingTableCardsType 
 const addNewPackAC = (NewPack: Pack): AddNewPackType => ({
     type: ADD_NEW_PACK,
     NewPack});
+const deletePackAC = (DeletedPack: Pack): DeletedPackType => ({
+    type: DELETE_PACK,
+    DeletedPack});
 
 
 export const LoadingPacksCards = () => (dispatch: Dispatch) => {
@@ -96,11 +109,17 @@ export const LoadingPacksCards = () => (dispatch: Dispatch) => {
             document.cookie = `token=${res.data.token}`;
         })
 };
-export const AddPacksCards = (newPack: string) => (dispatch: Dispatch) => {
+export const AddPackCard = (newPack: string) => (dispatch: Dispatch) => {
     return apiTablePacks.addCardsPack(newPack)
         .then(res => {
-            debugger
             dispatch(addNewPackAC(res.data.newCardsPack));
+            document.cookie = `token=${res.data.token}`;
+        })
+};
+export const DeletePackCard = (idPack:string) => (dispatch: Dispatch) => {
+    return apiTablePacks.deleteCardsPack(idPack)
+        .then(res => {
+            dispatch(deletePackAC(res.data.deletedCardsPack));
             document.cookie = `token=${res.data.token}`;
         })
 };

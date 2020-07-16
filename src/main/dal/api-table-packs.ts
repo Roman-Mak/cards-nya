@@ -37,6 +37,13 @@ export type ResponseAddPacks ={
     tokenDeathTime: number
 }
 
+export type ResponseDeletePacks = {
+    deletedCardsPack: Pack
+    success: boolean
+    token: string
+    tokenDeathTime: number
+}
+
 export const apiTablePacks = {
     loadingCardsPack() {
         return instance.get<ResponsePacks>(`cards/pack?${document.cookie}&pageCount=40`)
@@ -46,6 +53,8 @@ export const apiTablePacks = {
                 name: newPackName
             },token:document.cookie.split("=")[1]
         })
-    }
-
+    },
+    deleteCardsPack(idPack:string) {
+        return instance.delete<ResponseDeletePacks>(`cards/pack?${document.cookie}&id=${idPack}`)
+    },
 };

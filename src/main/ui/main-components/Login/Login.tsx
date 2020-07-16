@@ -33,7 +33,6 @@ const Login = () => {
 
     const setData = useCallback(
         () => {
-            console.log({email, password, rememberMe});
             dispatch(userLogin({email, password, rememberMe}));
         },
         [email, password, rememberMe, dispatch]

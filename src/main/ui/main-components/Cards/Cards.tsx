@@ -1,13 +1,14 @@
-import React, {useEffect} from "react";
+import React, {useCallback, useEffect, useState} from "react";
 import Table, {TableModelType} from "../../common/Table/Table";
 import {useDispatch, useSelector} from "react-redux";
 import {AppStateType} from "../../../bll/store";
-import {CardType} from "../../../dal/api-get-cards";
-import {getCards} from "../../../bll/cards-reducer";
+import {CardType} from "../../../dal/api-cards";
+import {addCard, getCards} from "../../../bll/cards-reducer";
 import Button from "../../common/Button/Button";
 import styles from "./Cards.module.css"
 import EditMenu from "../../common/Table/EditMenu";
 import {useParams} from "react-router-dom";
+import ModalWindowWithTwoInputs from "../../common/Modal/ModalWindowWith2Input";
 
 let columns: Array<TableModelType> = [
     {
@@ -41,6 +42,8 @@ type RouteParamsType = {
 };
 
 const Cards = () => {
+    const [isAddModalHidden, setIsAddModalHidden] = useState<boolean>(true);
+    const [isDeleteModalHidden, setIsDeleteModalHidden] = useState<boolean>(true);
     const cards = useSelector((state: AppStateType) => state.cards.cards);
     const dispatch = useDispatch();
     const packId = useParams<RouteParamsType>().packId;
@@ -49,12 +52,28 @@ const Cards = () => {
         dispatch(getCards(packId));
     }, [packId, dispatch]);
 
+    const onAddCardClick = useCallback(() => {
+        dispatch(addCard(packId));
+        setIsAddModalHidden(true);
+    }, [dispatch, packId]);
+
+    const showAddModal = () => {
+        setIsAddModalHidden(false);
+    };
+
+    const hideAddModal = () => {
+        setIsAddModalHidden(true);
+    };
+
     return (
         <div className={styles.container}>
             <div className={styles.addButton}>
-                <Button name={"Add Card"} onClickFunc={() => {
-                }}/>
+                <Button name={"Add Card"} onClickFunc={showAddModal}/>
             </div>
+            {!isAddModalHidden &&
+            <ModalWindowWithTwoInputs name={"Add"} placeholder={"Question"}
+                                      cancelFunction={hideAddModal}
+                                      addItemFunction={onAddCardClick}/>}
             <Table columns={columns} items={cards}/>
         </div>
     )

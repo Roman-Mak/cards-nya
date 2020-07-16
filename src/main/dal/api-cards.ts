@@ -27,10 +27,23 @@ type CardsResponseType = {
     pageCount: number;
     token: string;
     tokenDeathTime: number;
-}
+};
 
-export const getCardsApi = {
+type PostCardType = {
+    newCard: CardType;
+    success: boolean;
+    token: string;
+};
+
+export const cardsApi = {
     getCards(id: string) {
-        return instance.get<CardsResponseType>(`/cards/card?cardsPack_id=${id}&${document.cookie}`).then(res => res.data)
+        return instance.get<CardsResponseType>(`/cards/card?cardsPack_id=${id}&${document.cookie}`)
+            .then(res => res.data);
+    },
+    addCard(packId: string) {
+        return instance.post<PostCardType>(`/cards/card`, {
+            card: {cardsPack_id: packId
+            }, token: document.cookie.split("=")[1]
+        }).then(res => res.data);
     }
 };

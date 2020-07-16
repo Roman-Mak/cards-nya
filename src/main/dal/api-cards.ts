@@ -18,7 +18,7 @@ export type CardType = {
     _id: string;
 }
 
-type CardsResponseType = {
+type GetCardsResponseType = {
     cards: Array<CardType>;
     cardsTotalCount: number;
     maxGrade: number;
@@ -35,9 +35,21 @@ type PostCardResponseType = {
     token: string;
 };
 
+type DeleteCardResponseType = {
+    deletedCard: CardType;
+    success: boolean;
+    token: string;
+};
+
+type UpdateCardResponseType = {
+    updatedCard: CardType;
+    success: boolean;
+    token: string;
+};
+
 export const cardsApi = {
     getCards(id: string) {
-        return instance.get<CardsResponseType>(`/cards/card?cardsPack_id=${id}&${document.cookie}`)
+        return instance.get<GetCardsResponseType>(`/cards/card?cardsPack_id=${id}&${document.cookie}`)
             .then(res => res.data);
     },
     addCard(packId: string, question: string, answer: string) {
@@ -50,5 +62,19 @@ export const cardsApi = {
                 },
             token: document.cookie.split("=")[1]
         }).then(res => res.data);
+    },
+    deleteCard(cardId: string) {
+        return instance.delete<DeleteCardResponseType>(`/cards/card?${document.cookie}&id=${cardId}`)
+            .then(res => res.data)
+    },
+    updateCard(cardId: string, question: string, answer: string) {
+        return instance.put<UpdateCardResponseType>(`/cards/card`, {
+            card: {
+                _id: cardId,
+                question,
+                answer
+            },
+            token: document.cookie.split("=")[1]
+        }).then(res => res.data)
     }
 };

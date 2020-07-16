@@ -1,11 +1,11 @@
-import React, {ChangeEvent, useCallback, useState} from "react";
+import React, {ChangeEvent, useCallback, useEffect, useState} from "react";
 import styles from "./Login.module.css"
 import Input from "../../common/Input/Input";
 import Button from "../../common/Button/Button";
-import {userLogin} from "../../../bll/login-reducer";
+import {setIsAuth, userLogin} from "../../../bll/login-reducer";
 import {useDispatch, useSelector} from "react-redux";
 import {AppStateType} from "../../../bll/store";
-import { Redirect } from "react-router-dom";
+import {Redirect} from "react-router-dom";
 
 const Login = () => {
     const [email, setLogin] = useState<string>("");
@@ -15,6 +15,14 @@ const Login = () => {
     const dispatch = useDispatch();
     const error = useSelector((store: AppStateType) => store.login.error);
     const isAuth = useSelector((store: AppStateType) => store.login.isAuth);
+
+    const token = document.cookie;
+    useEffect(
+        () => {
+            if (token) {
+                dispatch(setIsAuth(true));
+            }
+        }, [token, dispatch]);
 
     const onRememberMeChange = useCallback(
         (e: ChangeEvent<HTMLInputElement>) => {

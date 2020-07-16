@@ -48,7 +48,7 @@ type SetErrorType = { type: typeof SET_ERROR; error: string };
 const setError = (error: string): SetErrorType => ({type: SET_ERROR, error});
 
 type SetIsAuthType = {type: typeof SET_IS_AUTH; isAuth: boolean};
-const setIsAuth = (isAuth: boolean): SetIsAuthType => ({type: SET_IS_AUTH, isAuth});
+export const setIsAuth = (isAuth: boolean): SetIsAuthType => ({type: SET_IS_AUTH, isAuth});
 
 export const userLogin = (userLoginData: UserLoginType) => (dispatch: Dispatch<LoginActionType>) => {
     loginApi.userLogin(userLoginData)

@@ -7,7 +7,7 @@ import {getCards} from "../../../bll/cards-reducer";
 import Button from "../../common/Button/Button";
 import styles from "./Cards.module.css"
 import EditMenu from "../../common/Table/EditMenu";
-import { withRouter, RouteComponentProps } from "react-router-dom";
+import {useParams} from "react-router-dom";
 
 let columns: Array<TableModelType> = [
     {
@@ -36,15 +36,14 @@ let columns: Array<TableModelType> = [
     }
 ];
 
-type PackIdType = {
+type RouteParamsType = {
     packId: string;
 };
-type CardsPropsType = RouteComponentProps<PackIdType>;
 
-const Cards = (props: CardsPropsType) => {
+const Cards = () => {
     const cards = useSelector((state: AppStateType) => state.cards.cards);
-    const packId = props.match.params.packId;
     const dispatch = useDispatch();
+    const packId = useParams<RouteParamsType>().packId;
 
     useEffect(() => {
         dispatch(getCards(packId));
@@ -61,4 +60,4 @@ const Cards = (props: CardsPropsType) => {
     )
 };
 
-export default withRouter(Cards);
+export default Cards;

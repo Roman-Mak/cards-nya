@@ -2,10 +2,10 @@ import React from "react";
 import {Route} from "react-router-dom";
 import styles from "./Routes.module.css"
 import Profile from "../Profile/Profile";
-import Login from "../Login/Login";
 import Register from "../Register/Register";
 import ForgotPassword from "../ForgotPassword/ForgotPassword";
-import MainTable from "../Table/TablePacks";
+import MainTable from "../TablePacks/TablePacks";
+import Login from "../Login/Login";
 
 
 export const PROFILE_PATH = "/profile";

@@ -12,7 +12,7 @@ const rootReducer = combineReducers({
     login: loginReducer,
     register: registerReducer,
     forgotPassword: forgotPasswordReducer,
-    packsOfCards:packsOfCardsReducer
+    packsOfCards:packsOfCardsReducer,
     cards: cardsReducer
 });
 

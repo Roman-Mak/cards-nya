@@ -1,10 +1,11 @@
 import React, {useState} from "react";
-import style from './ModalWindowWith2Button.module.css'
+import style from './ModalWindowWith2Buttons.module.css'
  type ModalWindowWith2ButtonTypes={
      confirmFunction:(idItem:string)=>void
      cancelFunction:()=> void
      nameItem:string
      idItem:string
+
  }
 
 const ModalWindowWithTwoButton:React.FC<ModalWindowWith2ButtonTypes> = (props) => {

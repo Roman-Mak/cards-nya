@@ -40,7 +40,6 @@ const Login = () => {
     );
 
     if (isAuth) return <Redirect to={"/profile"}/>;
-
     return (
 
         <div className={styles.login}>

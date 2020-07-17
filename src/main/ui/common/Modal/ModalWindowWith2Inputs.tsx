@@ -1,11 +1,12 @@
 import React, {ChangeEvent, useState} from "react";
-import style from './ModalWindowWith2Input.module.css'
+import style from './ModalWindowWith2Inputs.module.css'
 
 type  ModalWindowWithTwoInputs={
     name:string
     placeholder:string
     cancelFunction:()=>void
     addItemFunction:(firstValue:string)=>void
+
 }
 
 const ModalWindowWithTwoInputs:React.FC<ModalWindowWithTwoInputs> = (props) => {
@@ -36,10 +37,8 @@ const ModalWindowWithTwoInputs:React.FC<ModalWindowWithTwoInputs> = (props) => {
                 </div>
 
             </div>
-
         </>
 
     )
-
 };
 export default ModalWindowWithTwoInputs

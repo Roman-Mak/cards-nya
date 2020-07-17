@@ -1,9 +1,11 @@
 import {apiTablePacks, Pack} from "../dal/api-table-packs";
 import {Dispatch} from "redux";
+import {resolveAny} from "dns";
 
 const LOADING_PACKS_OF_CARDS = "cards-nya/packs/LOADING_PACKS_OF_CARDS";
 const ADD_NEW_PACK = "cards-nya/packs/ADD_NEW_PACK";
 const DELETE_PACK = "cards-nya/packs/DELETE_PACK";
+const CHANGE_PACK_NAME = "cards-nya/packs/CHANGE_PACK_NAME";
 
 
 const initialState = {
@@ -34,6 +36,7 @@ const initialState = {
         //     updated: "2020-05-09T15:40:40.339A",
         //     __v: 0
         // }
+
     ] as Array<Pack>
     // cardPacksTotalCount: 14, // количество колод
     // maxGrade: 4.824320858778307,
@@ -49,8 +52,9 @@ type CommonPacksType =
     LoadingTableCardsType
     | AddNewPackType
 
+// reducer
 
-const packsOfCardsReducer = (state: initialStateType = initialState, action: any):initialStateType => { //////исправить action!!!!
+const packsOfCardsReducer = (state: initialStateType = initialState, action: any): initialStateType => { //////исправить action!!!!
     switch (action.type) {
         case LOADING_PACKS_OF_CARDS: {
             return {
@@ -67,7 +71,17 @@ const packsOfCardsReducer = (state: initialStateType = initialState, action: any
         case DELETE_PACK: {
             return {
                 ...state,
-                cardPacks: state.cardPacks.filter(p =>p._id !== action.DeletedPack._id)
+                cardPacks: state.cardPacks.filter(p => p._id !== action.DeletedPack._id)
+            }
+        }
+        case CHANGE_PACK_NAME: {
+            return {
+                ...state,
+                cardPacks: state.cardPacks.map(p => {
+                    if (action.updatedCardsPack._id !== p._id) {
+                        return p
+                    } else return {...p, name: action.updatedCardsPack.name}
+                })
             }
         }
 
@@ -76,6 +90,9 @@ const packsOfCardsReducer = (state: initialStateType = initialState, action: any
     }
 };
 
+
+// ActionCreators
+
 type LoadingTableCardsType = {
     type: string
     allPacksCards: Array<Pack>
@@ -83,6 +100,10 @@ type LoadingTableCardsType = {
 type AddNewPackType = {
     type: string
     NewPack: Pack
+}
+type ChangePackNameType = {
+    type: string
+    updatedCardsPack: Pack
 }
 type DeletedPackType = {
     type: string
@@ -94,14 +115,24 @@ const loadingTableCardsAC = (allPacksCards: Array<Pack>): LoadingTableCardsType 
     type: LOADING_PACKS_OF_CARDS,
     allPacksCards
 });
+
+const changePackNameAC = (updatedCardsPack: Pack): ChangePackNameType => ({
+    type: CHANGE_PACK_NAME,
+    updatedCardsPack
+});
+
 const addNewPackAC = (NewPack: Pack): AddNewPackType => ({
     type: ADD_NEW_PACK,
-    NewPack});
+    NewPack
+});
+
 const deletePackAC = (DeletedPack: Pack): DeletedPackType => ({
     type: DELETE_PACK,
-    DeletedPack});
+    DeletedPack
+});
 
 
+// Thunk
 export const LoadingPacksCards = () => (dispatch: Dispatch) => {
     return apiTablePacks.loadingCardsPack()
         .then(res => {
@@ -109,6 +140,7 @@ export const LoadingPacksCards = () => (dispatch: Dispatch) => {
             document.cookie = `token=${res.data.token}`;
         })
 };
+
 export const AddPackCard = (newPack: string) => (dispatch: Dispatch) => {
     return apiTablePacks.addCardsPack(newPack)
         .then(res => {
@@ -116,11 +148,22 @@ export const AddPackCard = (newPack: string) => (dispatch: Dispatch) => {
             document.cookie = `token=${res.data.token}`;
         })
 };
-export const DeletePackCard = (idPack:string) => (dispatch: Dispatch) => {
+
+export const ChangePackName = (changedPackName: string, id: string) => (dispatch: Dispatch) => {
+    return apiTablePacks.changeCardsPackName(changedPackName, id)
+        .then(res => {
+            dispatch(changePackNameAC(res.data.updatedCardsPack));
+            document.cookie = `token=${res.data.token}`;
+        })
+};
+
+export const DeletePackCard = (idPack: string) => (dispatch: Dispatch) => {
     return apiTablePacks.deleteCardsPack(idPack)
         .then(res => {
             dispatch(deletePackAC(res.data.deletedCardsPack));
             document.cookie = `token=${res.data.token}`;
         })
 };
+
+
 export default packsOfCardsReducer;

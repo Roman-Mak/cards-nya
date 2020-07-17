@@ -1,12 +1,17 @@
 import React, {useEffect, useState} from "react";
 import styles from "./Learn.module.css"
-import {CardType} from "../../../dal/api-cards";
 import {useDispatch, useSelector} from "react-redux";
 import {AppStateType} from "../../../bll/store";
 import Button from "../../common/Button/Button";
+import {
+    setGrade,
+    setGradeSuccess,
+    setGradeError,
+    getCardToShowSuccess
+} from "../../../bll/learn-reducer";
+import {useParams} from "react-router-dom";
+import {CardType} from "../../../dal/api-cards";
 import {getCards} from "../../../bll/cards-reducer";
-import {setGrade} from "../../../bll/learn-reducer";
-import { useParams } from "react-router-dom";
 
 const getCard = (cards: Array<CardType>) => {
     const sum = cards.reduce((acc, card) => acc + (6 - card.grade) * (6 - card.grade), 0);
@@ -19,28 +24,47 @@ const getCard = (cards: Array<CardType>) => {
     return cards[res.id + 1];
 };
 
+
 type RouteParamsType = {
     packId: string;
 };
 
 const Learn = () => {
     const [isChecked, setIsChecked] = useState<boolean>(false);
-    const cards = useSelector((state: AppStateType) => state.cards.cards);
-    const setGradeSuccess = useSelector((state: AppStateType) => state.learn.updateGradeSuccess);
-    const packId = useParams<RouteParamsType>().packId;
-    const cardToShow = getCard(cards);
+    const [isFirstRender, setIsFirstRender] = useState<boolean>(true);
+    const allCards = useSelector((state: AppStateType) => state.cards.cards);
+    const cardToShow = useSelector((state: AppStateType) => state.learn.cardToShow);
+    const gradeSuccess = useSelector((state: AppStateType) => state.learn.updateGradeSuccess);
+    const gradeError = useSelector((state: AppStateType) => state.learn.isError);
+    const {packId} = useParams<RouteParamsType>();
     const dispatch = useDispatch();
 
     useEffect(() => {
-        dispatch(getCards(packId));
-    }, [packId, dispatch]);
+        console.log("use effect")
+        if (isFirstRender) {
+            dispatch(getCards(packId));
+            setIsFirstRender(false);
+            console.log("first")
+        }
+        if (allCards.length > 0) {
+            dispatch(getCardToShowSuccess(getCard(allCards)));
+            console.log("get card")
+        }
+    }, [isFirstRender, packId, allCards, dispatch]);
 
     const onSetGradeClick = (grade: number) => {
         dispatch(setGrade(cardToShow._id, grade));
     };
 
-    if (cards.length < 1) {
-        return null
+    const showNextCard = () => {
+        dispatch(getCardToShowSuccess(getCard(allCards)));
+        setIsChecked(false);
+        dispatch(setGradeSuccess(false));
+        dispatch(setGradeError(false));
+    };
+
+    if (isFirstRender || allCards.length === 0) {
+        return null;
     }
 
     return (
@@ -52,14 +76,15 @@ const Learn = () => {
                     : <div className={styles.answer}>
                         <span>Answer: {cardToShow.answer}</span>
                         <div>
-                            <button onClick={() => onSetGradeClick(1)}>didn't know</button>
-                            <button onClick={() => onSetGradeClick(2)}>forgot</button>
-                            <button onClick={() => onSetGradeClick(3)}>thought slowly</button>
-                            <button onClick={() => onSetGradeClick(4)}>knew good</button>
-                            <button onClick={() => onSetGradeClick(5)}>knew well</button>
+                            <Button name={"didn't know"} onClickFunc={() => onSetGradeClick(1)}/>
+                            <Button name={"forgot"} onClickFunc={() => onSetGradeClick(2)}/>
+                            <Button name={"thought slowly"} onClickFunc={() => onSetGradeClick(3)}/>
+                            <Button name={"knew good"} onClickFunc={() => onSetGradeClick(4)}/>
+                            <Button name={"knew well"} onClickFunc={() => onSetGradeClick(5)}/>
                         </div>
-                        {setGradeSuccess && <span style={{backgroundColor: "green"}}>Answer saved</span>}
-                        <button>Next card</button>
+                        {gradeSuccess && <span style={{color: "green"}}>answer saved</span>}
+                        {gradeError && <span style={{color: "red"}}>some error</span>}
+                        <Button name={"Next card"} onClickFunc={showNextCard}/>
                     </div>
             }
         </div>

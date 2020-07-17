@@ -15,7 +15,7 @@ export const REGISTER_PATH = "/register";
 export const FORGOT_PASSWORD_PATH = "/forgot-password";
 export const PACKS_TABLE = "/packs-table";
 export const CARDS_TABLE = `${PACKS_TABLE}/cards/:packId?`;
-export const LEARN_CARD = "/learn/:cardId";
+export const LEARN_CARD = "/learn/:packId?";
 
 const Routes = () => {
 

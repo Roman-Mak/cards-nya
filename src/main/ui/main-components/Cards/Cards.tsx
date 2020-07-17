@@ -105,7 +105,7 @@ const Cards = () => {
                 <Button name={"Add Card"} onClickFunc={() => setIsAddModalHidden(false)}/>
             </div>
             <Table columns={columns} items={cards}/>
-            <NavLink to={`${LEARN_CARD}/${packId}`}>LEARN</NavLink>
+            <NavLink to={`/learn/${packId}`}>LEARN</NavLink>
         </div>
     )
 };

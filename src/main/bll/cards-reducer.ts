@@ -45,9 +45,8 @@ type AddCardSuccessType = { type: typeof ADD_CARD, card: CardType };
 const addCardsSuccess = (card: CardType): AddCardSuccessType => ({type: ADD_CARD, card});
 
 type DeleteCardSuccessType = { type: typeof DELETE_CARD, cardId: string };
-const deleteCardsSuccess = (cardId: string): DeleteCardSuccessType => ({type: DELETE_CARD, cardId})
+const deleteCardsSuccess = (cardId: string): DeleteCardSuccessType => ({type: DELETE_CARD, cardId});
 
-;
 type UpdateCardSuccessType = { type: typeof UPDATE_CARD, card: CardType };
 const updateCardsSuccess = (card: CardType): UpdateCardSuccessType => ({type: UPDATE_CARD, card});
 

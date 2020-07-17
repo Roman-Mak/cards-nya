@@ -61,14 +61,3 @@ export const setGrade = (cardId: string, grade: number) => (dispatch: Dispatch<L
         })
         .catch(() => dispatch(setGradeError(true)));
 };
-
-// export const getCardToShow = (packId: string) => (dispatch: Dispatch<LearnActionType>) => {
-//     cardsApi.getCards(packId).then(res => {
-//         let cardToShow = getCard(res.cards);
-//         if (cardToShow) {
-//             dispatch(getCardToShowSuccess(cardToShow));
-//         }
-//         document.cookie = `token=${res.token}`
-//     })
-//         .catch((res) => console.log(res));
-// };

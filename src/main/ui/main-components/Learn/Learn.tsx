@@ -63,7 +63,7 @@ const Learn = () => {
         dispatch(setGradeError(false));
     };
 
-    if (isFirstRender || allCards.length === 0) {
+    if (allCards.length === 0) {
         return null;
     }
 

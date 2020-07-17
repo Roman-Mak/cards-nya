@@ -5,7 +5,7 @@ type  ModalWindowWithTwoInputs={
     name:string
     placeholder:string
     cancelFunction:()=>void
-    addItemFunction:(firstValue:string)=>void
+    addItemFunction:(firstValue:string, secondValue: string)=>void
 
 }
 
@@ -32,7 +32,7 @@ const ModalWindowWithTwoInputs:React.FC<ModalWindowWithTwoInputs> = (props) => {
                 <input type="text" value={firstValue} placeholder={props.placeholder} onChange={onChangeFirstInput}/>
                 <input type="text" value={secondValue} onChange={onChangeSecondInput}/>
                 <div className={style.forButton}>
-                    <button onClick={()=>props.addItemFunction(firstValue)}>{props.name}</button>
+                    <button onClick={()=>props.addItemFunction(firstValue, secondValue)}>{props.name}</button>
                     <button onClick={props.cancelFunction}>CANCEL</button>
                 </div>
 

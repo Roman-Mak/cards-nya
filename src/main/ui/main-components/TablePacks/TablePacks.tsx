@@ -8,6 +8,8 @@ import {AppStateType} from "../../../bll/store";
 import ModalWindowWithTwoInputs from "../../common/Modal/ModalWindowWith2Inputs";
 import ModalWindowWithTwoButton from "../../common/Modal/ModalWindowWith2Buttons";
 import ModalWindowWithOneInput from "../../common/Modal/ModalWindowWith1Input";
+import {PACKS_TABLE} from "../Routes/Routes";
+import { NavLink } from 'react-router-dom';
 
 
 const MainTable: React.FC = () => {
@@ -102,12 +104,13 @@ const MainTable: React.FC = () => {
         return {
             id: c._id,
             key: c._id,
-            name: <a>{c.name}</a>,
+            name: <NavLink to={`${PACKS_TABLE}/cards/${c._id}`}>{c.name}</NavLink>,
             created: c.created,
             update: c.updated,
             buttons: <div>
                 <button onClick={() => changeNamePackStatusFalse(c._id)}>update</button>
                 <button onClick={() => changeForDeletePacksStatusFalse(c._id)}>delete</button>
+                <button><NavLink to={`/learn/${c._id}`}>learn</NavLink></button>
             </div>,
         }
     });

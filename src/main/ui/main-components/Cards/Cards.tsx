@@ -8,8 +8,8 @@ import Button from "../../common/Button/Button";
 import styles from "./Cards.module.css"
 import EditMenu from "../../common/Table/EditMenu";
 import {useParams, NavLink} from "react-router-dom";
-import ModalWindowWithTwoInputs from "../../common/Modal/ModalWindowWith2Input";
-import ModalWindowWithTwoButton from "../../common/Modal/ModalWindowWith2Button";
+import ModalWindowWithTwoInputs from "../../common/Modal/ModalWindowWith2Inputs";
+import ModalWindowWithTwoButton from "../../common/Modal/ModalWindowWith2Buttons";
 import Learn from "../Learn/Learn";
 import {LEARN_CARD} from "../Routes/Routes";
 
@@ -66,8 +66,8 @@ const Cards = () => {
         dispatch(getCards(packId));
     }, [packId, dispatch]);
 
-    const onAddCardClick = useCallback((question: string) => {
-        dispatch(addCard(packId, question, "blabla"));
+    const onAddCardClick = useCallback((question: string, answer: string) => {
+        dispatch(addCard(packId, question, answer));
         setIsAddModalHidden(true);
     }, [dispatch, packId]);
 
@@ -76,8 +76,8 @@ const Cards = () => {
         setIsDeleteModalHidden(true);
     }, [dispatch]);
 
-    const onUpdateCardClick = useCallback((cardId: string, question: string) => {
-        dispatch(updateCard(cardId, question, "blabla222"));
+    const onUpdateCardClick = useCallback((cardId: string, question: string, answer: string) => {
+        dispatch(updateCard(cardId, question, answer));
         setIsUpdateModalHidden(true)
     }, [dispatch]);
 
@@ -89,14 +89,16 @@ const Cards = () => {
                                       addItemFunction={onAddCardClick}/>}
             {cards.map(card => {
                 if (!isDeleteModalHidden && cardId === card._id) {
-                    return <ModalWindowWithTwoButton key={card._id}
-                                                     confirmFunction={() => onDeleteCardClick(card._id)}
-                                                     cancelFunction={() => setIsDeleteModalHidden(true)}/>
+                    return <ModalWindowWithTwoButton confirmFunction={onDeleteCardClick}
+                                                     cancelFunction={() => setIsDeleteModalHidden(true)}
+                                                     nameItem={"Card"} idItem={card._id}
+                                                     key={card._id}
+                    />
                 } else if (!isUpdateModalHidden && cardId === card._id) {
                     return <ModalWindowWithTwoInputs
                         name={"Update"} placeholder={"Question"} key={card._id}
                         cancelFunction={() => setIsUpdateModalHidden(true)}
-                        addItemFunction={(question) => onUpdateCardClick(card._id, question)}/>
+                        addItemFunction={(question, answer) => onUpdateCardClick(card._id, question, answer)}/>
                 } else {
                     return null;
                 }
@@ -105,7 +107,6 @@ const Cards = () => {
                 <Button name={"Add Card"} onClickFunc={() => setIsAddModalHidden(false)}/>
             </div>
             <Table columns={columns} items={cards}/>
-            <NavLink to={`/learn/${packId}`}>LEARN</NavLink>
         </div>
     )
 };

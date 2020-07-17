@@ -5,7 +5,7 @@ import Profile from "../Profile/Profile";
 import Login from "../Login/Login";
 import Register from "../Register/Register";
 import ForgotPassword from "../ForgotPassword/ForgotPassword";
-import MainTable from "../Table/TablePacks";
+import MainTable from "../TablePacks/TablePacks";
 import Cards from "../Cards/Cards";
 import Learn from "../Learn/Learn";
 

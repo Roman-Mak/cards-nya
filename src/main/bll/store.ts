@@ -6,6 +6,7 @@ import registerReducer from "./register-reducer";
 import forgotPasswordReducer from "./forgot-password-reducer";
 import packsOfCardsReducer from "./packs-reducer";
 import cardsReducer from "./cards-reducer";
+import {learnReducer} from "./learn-reducer";
 
 const rootReducer = combineReducers({
     profile: profileReducer,
@@ -13,7 +14,8 @@ const rootReducer = combineReducers({
     register: registerReducer,
     forgotPassword: forgotPasswordReducer,
     packsOfCards: packsOfCardsReducer,
-    cards: cardsReducer
+    cards: cardsReducer,
+    learn: learnReducer
 });
 
 type RootReducerType = typeof rootReducer;

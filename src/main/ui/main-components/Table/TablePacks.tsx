@@ -7,6 +7,8 @@ import {Pack} from '../../../dal/api-table-packs';
 import {AppStateType} from "../../../bll/store";
 import ModalWindowWithTwoInputs from "../../common/Modal/ModalWindowWith2Input";
 import ModalWindowWithTwoButton from "../../common/Modal/ModalWindowWith2Button";
+import {NavLink} from "react-router-dom";
+import {PACKS_TABLE} from "../Routes/Routes";
 
 
 const MainTable: React.FC = () => {
@@ -70,8 +72,9 @@ const MainTable: React.FC = () => {
 
     const dataOfPacks = Packs.map((c:Pack) => {
         return {
+            id: c._id,
             key: c._id,
-            name: <a>{c.name}</a>,
+            name: <NavLink to={`${PACKS_TABLE}/cards/${c._id}`}>{c.name}</NavLink>,
             created: c.created,
             update: c.updated,
             buttons: <div>

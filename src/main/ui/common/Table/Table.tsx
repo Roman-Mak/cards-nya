@@ -1,6 +1,6 @@
 import React, {ReactNode} from "react";
 import styles from "./Table.module.css"
-import {CardType} from "../../../dal/api-get-cards";
+import {CardType} from "../../../dal/api-cards";
 
 export type TableModelType = {
     title: string;

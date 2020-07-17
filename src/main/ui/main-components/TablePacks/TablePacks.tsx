@@ -24,6 +24,7 @@ const MainTable: React.FC = () => {
         setCurrentId(id)
     };
 
+
     //State и функции для модального окна по добавлению колоды
     const [isHiddenForAddPacks, setIsHiddenForAddPacks] = useState<boolean>(true);
     const changeForAddPacksStatusFalse = () => {
